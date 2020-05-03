@@ -89,7 +89,7 @@ class App(tk.Tk):
         img = img / 255.0
 
         img = img.reshape((1, 28, 28, 1))
-        value = model.predict([img])[0], reverse=True
+        value = model.predict([img])[0]
         
         os.remove('test.jpg')
         res = ''
