@@ -89,14 +89,18 @@ class App(tk.Tk):
         img = img / 255.0
 
         img = img.reshape((1, 28, 28, 1))
-        value = model.predict([img])[0]
+        value = model.predict([img])[0], reverse=True
         
         os.remove('test.jpg')
         res = ''
         predicted = np.argmax(value)
         prob_ = max(value)*100
         self.guess.configure(text = f'{predicted}   {round(prob_, 2)}%', font=('Consolas', 24))
+        scores = {}
         for num, prob in enumerate(value):
+            scores[num] = prob
+
+        for num, score in sorted(scores.items(), key=lambda item: item[1], reverse=True):
             res += f'{num} \t {round(prob*100,2)}%'
             res += '\n'
         self.label.configure(text=res)
